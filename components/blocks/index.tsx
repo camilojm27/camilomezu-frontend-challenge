@@ -8,6 +8,10 @@ import { Video } from "./video";
 import { Callout } from "./callout";
 import { Stats } from "./stats";
 import { CallToAction } from "./call-to-action";
+import { Newsletter } from "./newsletter";
+
+// Extended PageBlocks to include our new Newsletter type
+type ExtendedPageBlocks = PageBlocks | { __typename: "PageBlocksNewsletter" } & any;
 
 export const Blocks = (props: Omit<Page, "id" | "_sys" | "_values">) => {
   if (!props.blocks) return null;
@@ -16,7 +20,7 @@ export const Blocks = (props: Omit<Page, "id" | "_sys" | "_values">) => {
       {props.blocks.map(function (block, i) {
         return (
           <div key={i} data-tina-field={tinaField(block)}>
-            <Block {...block} />
+            <Block {...block as ExtendedPageBlocks} />
           </div>
         );
       })}
@@ -24,7 +28,7 @@ export const Blocks = (props: Omit<Page, "id" | "_sys" | "_values">) => {
   );
 };
 
-const Block = (block: PageBlocks) => {
+const Block = (block: ExtendedPageBlocks) => {
   switch (block.__typename) {
     case "PageBlocksVideo":
       return <Video data={block} />;
@@ -42,6 +46,8 @@ const Block = (block: PageBlocks) => {
       return <Testimonial data={block} />;
     case "PageBlocksCta":
       return <CallToAction data={block} />;
+    case "PageBlocksNewsletter":
+      return <Newsletter data={block} />;
     default:
       return null;
   }
