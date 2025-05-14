@@ -1,107 +1,130 @@
-# Tina Starter 🦙
+# Newsletter Subscription Component - TinaCMS Challenge
 
-![tina-cloud-starter-demo](https://user-images.githubusercontent.com/103008/130587027-995ccc45-a852-4f90-b658-13e8e0517339.gif)
+This project is a submission for a technical challenge to implement a reusable Newsletter Subscription component for a TinaCMS-powered website, built with Next.js and deployed on Vercel.
 
-This Next.js starter is powered by [TinaCMS](https://app.tina.io) for you and your team to visually live edit the structured content of your website. ✨
+## Challenge Overview
 
-The content is managed through Markdown and JSON files stored in your GitHub repository, and queried through Tina GraphQL API.
+The goal was to develop a Newsletter Subscription component as a content block, integrating it fully with TinaCMS. This involved creating a standalone React component with editable content elements, responsive design, and user interaction feedback, all manageable through the TinaCMS visual editor.
 
-### Features
+## Features
 
-- [Tina Headless CMS](https://app.tina.io) for authentication, content modeling, visual editing and team management.
-- [Vercel](https://vercel.com) deployment to visually edit your site from the `/admin` route.
-- Local development workflow from the filesystem with a local GraqhQL server.
+*   **Newsletter Subscription Component:** A reusable React component.
+*   **Editable Content:**
+    *   Headline/Title (with optional visual highlight, rich text)
+    *   Short Description (rich text)
+    *   Email Input Field
+    *   Subscribe Button
+    *   Privacy Policy Consent Checkbox
+*   **TinaCMS Integration:**
+    *   Content elements are editable via the TinaCMS visual editor.
+    *   Defined schema for the component.
+    *   Set up as a reusable block within TinaCMS.
+*   **Responsive Design:** Ensures functionality and visual consistency across mobile, tablet, and desktop devices.
+*   **User Interaction:**
+    *   Hover states for interactive elements.
+    *   Basic email validation.
+    *   Visual success/error feedback for the subscription form (UI behavior only, no backend integration).
 
-## Requirements
+## Tech Stack
 
-- Git, [Node.js Active LTS](https://nodejs.org/en/about/releases/), pnpm installed for local development.
-- A [TinaCMS](https://app.tina.io) account for live editing.
+*   **Framework:** Next.js
+*   **CMS:** TinaCMS (with Tina Cloud and GraphQL)
+*   **Styling:** TailwindCSS
+*   **UI Components:** Radix UI
+*   **Package Manager:** pnpm
 
-## Local Development
+## Getting Started & Local Development
 
-Install the project's dependencies:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-> [!NOTE]  
-> [Do you know the best package manager for Node.js?](https://www.ssw.com.au/rules/best-package-manager-for-node/) Using the right package manager can greatly enhance your development workflow. We recommend using pnpm for its speed and efficient handling of dependencies. Learn more about why pnpm might be the best choice for your projects by checking out this rule from SSW.
+### Prerequisites
 
+*   Git
+*   [Node.js Active LTS](https://nodejs.org/en/about/releases/)
+*   pnpm
+*   A [TinaCMS Cloud](https://app.tina.io) account
 
-```
-pnpm install
-```
+### Installation
 
-Run the project locally:
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/camilojm27/camilomezu-frontend-challenge
+    cd camilomezu-frontend-challenge
+    ```
 
-```
-pnpm dev
-```
+2.  **Install dependencies:**
+    > [!NOTE]
+    > This project uses pnpm as recommended for its speed and efficient handling of dependencies.
+
+    ```bash
+    pnpm install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env` file in the root of the project by copying the `.env.example` file:
+    ```bash
+    cp .env.example .env
+    ```
+    Update the `.env` file with your TinaCMS project credentials:
+    ```
+    NEXT_PUBLIC_TINA_CLIENT_ID=<get this from the project you create at app.tina.io>
+    TINA_TOKEN=<get this from the project you create at app.tina.io>
+    NEXT_PUBLIC_TINA_BRANCH=<Specify the branch with Tina configured, e.g., main or master>
+    ```
+
+4.  **Run the development server:**
+    ```bash
+    pnpm dev
+    ```
 
 ### Local URLs
 
-- http://localhost:3000 : browse the website
-- http://localhost:3000/admin : connect to Tina Cloud and go in edit mode
-- http://localhost:3000/exit-admin : log out of Tina Cloud
-- http://localhost:4001/altair/ : GraphQL playground to test queries and browse the API documentation
+*   **Browse the website:** `http://localhost:3000`
+*   **Access TinaCMS (edit mode):** `http://localhost:3000/admin` (connect to Tina Cloud)
+*   **GraphQL Playground:** `http://localhost:3000/admin/index.html#/graphql` (to test queries and browse API documentation)
+
+## TinaCMS Integration
+
+The Newsletter Subscription component is integrated as a reusable block within TinaCMS. This means:
+*   You can add the Newsletter block to any page managed by TinaCMS.
+*   All content elements (headline, description, button text, etc.) can be visually edited directly from the `/admin` interface.
+*   The schema for this component is defined in the TinaCMS configuration, allowing for structured content management.
 
 ## Deployment
 
-### GitHub Pages
+The project is deployed on Vercel.
 
-This starter can be deployed to GitHub Pages. A GitHub Actions workflow is included that handles the build and deployment process. 
+*   **Live Site:** [Link to your Vercel deployment]
+*   **TinaCMS Visual Editor Access:** [Link to your TinaCMS admin or instructions on how to access if credentials are required by evaluators]
 
-To deploy to GitHub Pages:
+## Development Process & Learnings
 
-1. In your repository settings, ensure GitHub Pages is enabled and set to deploy from the `gh-pages` branch
-2. Push changes to your main branch - the workflow will automatically build and deploy the site
-
-> [!NOTE]
-> When deploying to GitHub Pages, you'll need to update your secrets in Settings | Secrets and variables | Actions to include:
-> - `NEXT_PUBLIC_TINA_CLIENT_ID`
-> - `TINA_TOKEN`
->
-> You get these from your TinaCloud project - [read the docs](https://tina.io/docs/tina-cloud/deployment-options/github-pages)
-
-> [!IMPORTANT]
-> GitHub Pages does not support server side code, so this will run as a static site. If you don't want to deploy to GitHub pages, just delete `.github/workflows/build-and-deploy.yml`
-
-### Building the Starter Locally (Using the hosted content API)
-
-Replace the `.env.example`, with `.env`
-
-```
-NEXT_PUBLIC_TINA_CLIENT_ID=<get this from the project you create at app.tina.io>
-TINA_TOKEN=<get this from the project you create at app.tina.io>
-NEXT_PUBLIC_TINA_BRANCH=<Specify the branch with Tina configured>
-```
-
-Build the project:
-
+To complete this test, the first thing I did was research TinaCMS to understand how it works and how to integrate it with Next.js. After that, I created a repository and used the TinaCMS Next.js template to set up the project by running:
 ```bash
-pnpm build
+npx create-tina-app@latest
 ```
+For the package manager, I used pnpm as recommended by Tina — it's great for frontend projects, improving both development speed and disk space usage.
 
-## Getting Help
+I deployed the project to Vercel early on, before making any template changes, so I could validate that each new commit was successfully reflected in production.
 
-To get help with any TinaCMS challenges you may have:
+To customize the project, I relied on Tina's documentation and LLMs to understand how to create reusable components. I built a simple newsletter interface that works from the Tina admin panel. For the UI, I used the libraries already included in the project like Radix UI and TailwindCSS, then adjusted the design to match the template provided.
 
-- Visit the [documentation](https://tina.io/docs/) to learn about Tina.
-- [Join our Discord](https://discord.gg/zumN63Ybpf) to share feedback.
-- Visit the [community forum](https://community.tinacms.org/) to ask questions.
-- Get support through the chat widget on the TinaCMS Dashboard
-- [Email us](mailto:support@tina.io) to schedule a call with our team and share more about your context and what you're trying to achieve.
-- [Search or open an issue](https://github.com/tinacms/tinacms/issues) if something is not working.
-- Reach out on Twitter at [@tina_cms](https://twitter.com/tina_cms).
+One challenge encountered was an initial attempt to store newsletter emails directly in the CMS. I learned that TinaCMS is not designed for dynamic data storage in that manner, which led to some troubleshooting before understanding this limitation.
 
-## Development tips
+Additionally, while Large Language Models (LLMs) can significantly accelerate development, it's crucial to critically review the code they generate. For instance, suggestions to use `dangerouslySetInnerHTML` might work but may not always be the safest or best practice.
 
-### Visual Studio Code GraphQL extension
+## Usage Documentation
 
-[Install the GraphQL extension](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql) to benefit from type auto-completion.
+1.  Navigate to the TinaCMS admin panel (usually `https://camilomezu-frontend-challenge.vercel.app/admin`).
+2.  Select or create a page where you want to add the Newsletter Subscription component.
+3.  In the page editing interface, look for an option to add a new block or section.
+4.  Choose the "Newsletter Subscription" block from the list of available blocks.
+5.  Once added, you can click on the component in the visual editor to modify its content:
+    *   Update the headline and description (supports rich text).
+    *   Change the button text.
+    *   Toggle the privacy policy checkbox requirement or edit its text.
+6.  Save your changes. The updated component will be live on your site.
 
-### Typescript
+## License
 
-A good way to ensure your components match the shape of your data is to leverage the auto-generated TypeScript types.
-These are rebuilt when your `tina` config changes.
-
-## LICENSE
-
-Licensed under the [Apache 2.0 license](./LICENSE).
+Licensed under the [Apache 2.0 license](./LICENSE). 
