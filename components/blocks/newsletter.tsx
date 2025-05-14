@@ -1,3 +1,9 @@
+/*
+newsletter.tsx
+This file defines the newsletter block component
+and the newsletter block schema for the TinaCMS.
+*/
+
 import { useState } from 'react';
 import type { Template } from 'tinacms';
 import { tinaField } from 'tinacms/dist/react';
@@ -5,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Section } from '../layout/section';
-import { TinaMarkdown } from 'tinacms/dist/rich-text';
+import { Card } from '@/components/ui/card';
 
 // Define our own type since it's not generated yet
 interface NewsletterBlock {
@@ -64,17 +70,13 @@ export const Newsletter = ({ data }: { data: NewsletterBlock }) => {
     
     try {
       // Create subscription data
-      const subscription: NewsletterSubscription = {
-        email,
-        timestamp: new Date().toISOString(),
-        source: window.location.pathname,
-      };
-      
+      // Simulate API call with timeout
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      console.log('Newsletter subscription:', subscription);
-      
-      setSubmitStatus('success');
-      setEmail('');
+      console.log("Newsletter subscription:");
+
+      setSubmitStatus("success");
+      setEmail("");
       setAgreedToPolicy(false);
     } catch (error) {
       // Error state
@@ -86,42 +88,33 @@ export const Newsletter = ({ data }: { data: NewsletterBlock }) => {
   };
 
   return (
-    <Section>
-      <div className="mx-auto max-w-3xl">
-        <div className="text-center">
-          <h2 
-            className="text-balance text-4xl font-semibold lg:text-5xl" 
-            data-tina-field={tinaField(data, 'title')}
-          >
-            {data.title || "Subscribe to our Newsletter"}
-          </h2>
-          
-          {data.description && (
-            <p 
-              className="mt-4 text-balance text-lg text-muted-foreground"
-              data-tina-field={tinaField(data, 'description')}
-            >
-              {data.description}
-            </p>
-          )}
-        </div>
-
-        <div className="mt-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
+    <Section className="bg-[#f5f7f8] py-16">
+      <div className="relative flex justify-center">
+        <Card className="relative z-20 w-full max-w-2xl px-8 pt-20 pb-10 bg-[#f5f7f8] rounded-2xl border-none shadow-xl">
+          <div className="text-left">
+            <h2 className="text-4xl lg:text-5xl font-extrabold leading-tight text-[#002b36]">
+              Join our super rad<br />
+              besties newsletter —<br />
+              <span className="text-[#ff6f6f]">The Perch</span>
+            </h2>
+          </div>
+          <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="newsletter-email" className="font-bold text-base text-[#002b36]">Email Address</label>
               <Input
+                id="newsletter-email"
                 type="email"
-                placeholder={data.placeholderText || "Enter your email"}
+                placeholder={data.placeholderText || "abc@company.com"}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`h-12 ${emailError ? 'border-red-500' : ''}`}
+                className={`h-14 text-lg px-4 bg-white border-2 border-transparent focus:border-[#ff6f6f] rounded-md ${emailError ? 'border-red-500' : ''}`}
                 aria-invalid={!!emailError}
               />
               {emailError && (
                 <p className="text-sm text-red-500">{emailError}</p>
               )}
             </div>
-
+            {/* Privacy Checkbox */}
             <div className="flex items-start space-x-2">
               <Checkbox
                 id="privacy-policy"
@@ -136,29 +129,26 @@ export const Newsletter = ({ data }: { data: NewsletterBlock }) => {
                 {data.privacyText || "I agree to the privacy policy"}
               </label>
             </div>
-
             <Button
               type="submit"
               disabled={submitting || !agreedToPolicy}
-              className="w-full h-12 transition-colors hover:bg-primary/90"
+              className="w-40 h-12 text-lg font-bold bg-[#002b36] hover:bg-[#003847] text-white rounded-lg self-start"
               data-tina-field={tinaField(data, 'buttonText')}
             >
               {submitting ? 'Submitting...' : data.buttonText || 'Subscribe'}
             </Button>
           </form>
-
           {submitStatus === 'success' && (
             <div className="mt-4 p-4 bg-green-100 text-green-800 rounded">
               <p className="text-center">{data.successMessage || 'Thank you for subscribing!'}</p>
             </div>
           )}
-
           {submitStatus === 'error' && (
             <div className="mt-4 p-4 bg-red-100 text-red-800 rounded">
               <p className="text-center">{data.errorMessage || 'An error occurred. Please try again later.'}</p>
             </div>
           )}
-        </div>
+        </Card>
       </div>
     </Section>
   );
